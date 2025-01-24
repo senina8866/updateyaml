@@ -33,6 +33,16 @@ jobs:
           wget -O ./configs/config1.yaml $YAML_URL1
           wget -O ./configs/config2.yaml $YAML_URL2
 
+      - name: 安装 Python 3 和依赖
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip
+          pip3 install pyyaml    
+
+      - name: 合并YAML
+        run: |
+          python3 merge_yaml.py
+          
       - name: 添加目录到 Git
         run: |
             git config --global user.email "senina8866@gmail.com"
