@@ -26,4 +26,4 @@ jobs:
             git config --global user.name "senina8866"
             #git add -f ./configs
             #git commit -m "Add configs directory"
-            #git push
+            git push
