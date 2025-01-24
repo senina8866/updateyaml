@@ -3,6 +3,7 @@ name: mkdir Configs
 on:
   workflow_dispatch:   # 手动触发
   schedule:
+    - cron: '0 0 * * *'  # 每天午夜触发
 
 jobs:
   update_yaml_configs:
@@ -14,6 +15,8 @@ jobs:
 
       - name: 创建配置文件目录
         run: |
+          echo "Creating configs directory"
           mkdir -p ./configs
+
 
 
