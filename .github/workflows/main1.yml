@@ -24,6 +24,6 @@ jobs:
         run: |
             git config --global user.email "senina8866@gmail.com"
             git config --global user.name "senina8866"
-            git add -f ./configs
-            git commit -m "Add configs directory"
-            git push
+            #git add -f ./configs
+            #git commit -m "Add configs directory"
+            #git push
