@@ -17,6 +17,7 @@ jobs:
         run: |
           echo "Before creating configs directory"
           mkdir -p ./configs
+          echo "Test file" > ./configs/test.txt
           echo "Configs directory created"
 
       - name: 添加目录到 Git
