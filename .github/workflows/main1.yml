@@ -19,27 +19,10 @@ jobs:
           mkdir -p ./configs
           echo "Configs directory created"
 
-      - name: List files
-        run: |
-          ls -la
-          
-      - name: 检查目录
-        run: |
-            echo "Checking configs directory"
-            ls -la ./configs
-      
-      - name: List files
-        run: |
-            ls -la
-      
-      - name: Git 状态
-        run: |
-            git status
-      
       - name: 添加目录到 Git
         run: |
             git config --global user.email "senina8866@gmail.com"
             git config --global user.name "senina8866"
-            git add ./configs
+            git add -f ./configs
             git commit -m "Add configs directory"
             git push
