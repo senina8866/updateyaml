@@ -1,4 +1,4 @@
-name: mkdir Configs
+name: mkdir Configs 2
 
 on:
   workflow_dispatch:   # 手动触发
@@ -11,12 +11,20 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2 
+        uses: actions/checkout@v2
 
       - name: 创建配置文件目录
         run: |
-          echo "Creating configs directory"
+          echo "Before creating configs directory"
           mkdir -p ./configs
+          echo "Configs directory created"
 
-
-
+      - name: List files
+        run: |
+          ls -la
+      
+      - name: 添加目录到 Git
+        run: |
+          git add ./configs
+          git commit -m "Add configs directory"
+          git push
