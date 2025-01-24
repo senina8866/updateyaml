@@ -16,6 +16,7 @@ jobs:
       - name: 创建配置文件目录
         run: |
           echo "Before creating configs directory"
+          pwd
           mkdir -p ./configs
           echo "Configs directory created"
 
