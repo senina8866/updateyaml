@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Check space usage
+      - name: 查看CPU 内存 存储
         if: (!cancelled())
         run: cat /proc/cpuinfo && cat /proc/meminfo && df -hT
         
@@ -47,12 +47,10 @@ jobs:
         run: |
           python3 merge_yaml.py
           
-      - name: 添加目录到 Git
+      - name: 添加文件目录到 Git
         run: |
             git config --global user.email "senina8866@gmail.com"
             git config --global user.name "senina8866"
             git add -f ./configs
-            #git add -f ./configs/config1.yaml
-            #git add -f ./configs/config2.yaml
-            git commit -m "Add configs directory"
+            git commit -m "Add Files to configs"
             git push
