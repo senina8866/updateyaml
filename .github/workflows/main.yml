@@ -1,4 +1,4 @@
-name: mkdir Configs
+name: merge clash yaml
 
 on:
   workflow_dispatch:   # 手动触发
