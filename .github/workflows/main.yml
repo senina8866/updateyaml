@@ -1,4 +1,4 @@
-name: mkdir Configs 1
+name: mkdir Configs
 
 on:
   workflow_dispatch:   # 手动触发
