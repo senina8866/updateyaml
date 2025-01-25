@@ -13,6 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Check space usage
+        if: (!cancelled())
+        run: df -hT
+        
       - name: 创建配置文件目录
         run: |
           echo "Before creating configs directory"
