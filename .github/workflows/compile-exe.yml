@@ -34,4 +34,5 @@ jobs:
             git config --global user.email "senina8866@gmail.com"
             git config --global user.name "senina8866"
             git add -f ./dist
+            git commit -m "Add dist directory"
             git push
