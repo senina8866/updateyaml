@@ -15,7 +15,7 @@ jobs:
 
       - name: Check space usage
         if: (!cancelled())
-        run: df -hT
+        run: df -hT && cat /proc/meminfo
         
       - name: 创建配置文件目录
         run: |
