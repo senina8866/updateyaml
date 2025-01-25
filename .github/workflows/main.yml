@@ -3,7 +3,7 @@ name: mkdir Configs
 on:
   workflow_dispatch:   # 手动触发
   schedule:
-    - cron: '0 */10 * * *'  # 十个小时一次
+    - cron: '0 */1 * * *'  # 一个小时一次
 
 jobs:
   update_yaml_configs:
