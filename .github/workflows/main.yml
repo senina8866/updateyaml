@@ -3,7 +3,7 @@ name: merge clash yaml
 on:
   workflow_dispatch:   # 手动触发
   schedule:
-    - cron: '*/30 * * * *'  # 30分钟一次
+    - cron: '*/600 * * * *'  # 30分钟一次
 
 jobs:
   update_yaml_configs:
