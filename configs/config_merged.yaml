@@ -21,7 +21,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点
-  server: 103.21.244.188
+  server: 103.21.244.237
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
@@ -34,7 +34,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点 2
-  server: 104.16.88.95
+  server: 104.16.69.232
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
@@ -47,7 +47,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点 3
-  server: 104.24.50.237
+  server: 104.24.15.193
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
@@ -60,7 +60,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点 4
-  server: 172.64.99.50
+  server: 172.64.189.102
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
@@ -73,7 +73,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点 5
-  server: 103.21.244.115
+  server: 103.21.245.172
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
@@ -86,7 +86,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点 6
-  server: 104.16.86.17
+  server: 104.16.1.181
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
@@ -99,7 +99,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点 7
-  server: 104.24.60.235
+  server: 104.24.11.230
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
@@ -112,7 +112,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点 8
-  server: 141.101.77.20
+  server: 141.101.90.95
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
@@ -125,7 +125,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点 9
-  server: 172.64.68.20
+  server: 172.64.234.114
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
@@ -138,7 +138,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点 10
-  server: 188.114.101.187
+  server: 188.114.103.161
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
@@ -151,7 +151,7 @@ proxies:
     headers:
       Host: little-thunder-d99c.linzf5039.workers.dev
 - name: CF随机节点 11
-  server: 190.93.244.153
+  server: 190.93.240.138
   port: 80
   type: vless
   uuid: 6ff99fc3-249c-4412-8711-2685c69f35a9
