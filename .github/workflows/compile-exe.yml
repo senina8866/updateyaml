@@ -14,7 +14,7 @@ jobs:
 
       - name: 创建配置文件目录
         run: |
-          echo "Before creating configs directory"
+          echo "Before creating dist directory"
           mkdir -p ./dist
           echo "dist directory created"
           
