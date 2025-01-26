@@ -38,6 +38,7 @@ jobs:
           TXT_URL3="https://clashgithub.com/wp-content/uploads/rss/${CURRENT_DATE}.txt" 
           curl -o ./configs/config1.yaml $YAML_URL1
           curl -o ./configs/config2.yaml $YAML_URL2
+          curl -o ./configs/config3.txt $YAML_URL3
 
       - name: 添加文件目录到 Git
         run: |
