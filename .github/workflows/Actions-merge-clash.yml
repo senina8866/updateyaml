@@ -34,7 +34,8 @@ jobs:
         run: |
           YAML_URL1="https://little-thunder-d99c.linzf5039.workers.dev/335581?clash"
           YAML_URL2="https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml"
-          YAML_URL3="https://clashgithub.com/wp-content/uploads/rss/20250126.yml"
+          CURRENT_DATE=$(date +'%Y%m%d')
+          YAML_URL3="https://clashgithub.com/wp-content/uploads/rss/${CURRENT_DATE}.yml"
           wget -O ./configs/config1.yaml $YAML_URL1
           wget -O ./configs/config2.yaml $YAML_URL2
           wget -O ./configs/config3.yaml $YAML_URL3
