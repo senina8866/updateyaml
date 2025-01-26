@@ -30,7 +30,7 @@ jobs:
             sudo apt-get install -y wget
           fi
           
-      - name: 下载 Base64 编码的 TXT 文件
+      - name: 下载 yaml 和 Base64 编码的 TXT 文件
         run: |
            YAML_URL1="https://little-thunder-d99c.linzf5039.workers.dev/335581?clash"
            YAML_URL2="https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml"
@@ -46,7 +46,7 @@ jobs:
           sudo apt-get install -y python3 python3-pip
           pip3 install pyyaml    
 
-      - name: base64转v2ray | v2ray转clash yaml
+      - name: Base64转v2ray txt
         run: |
           python3 decode_and_convert.py
           
