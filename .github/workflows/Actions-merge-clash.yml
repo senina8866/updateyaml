@@ -27,8 +27,8 @@ jobs:
         run: |
           YAML_URL1="https://little-thunder-d99c.linzf5039.workers.dev/335581?clash"
           YAML_URL2="https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml"
-          YAML_URL3="https://clashgithub.com/wp-content/uploads/rss/20250126.yml"
-#          YAML_URL3="https://clashgithub.com/wp-content/uploads/rss/$(date +%Y%m%d).yml"
+          YAML_URL3="https://clashgithub.com/wp-content/uploads/rss/20250126.yml" # 动态生成 YAML_URL3
+          #YAML_URL3="https://clashgithub.com/wp-content/uploads/rss/$(date +%Y%m%d).yml" # 动态生成 YAML_URL3
           curl -f -o ./configs/config1.yaml $YAML_URL1 || exit 1
           curl -f -o ./configs/config2.yaml $YAML_URL2 || exit 1
           curl -f -o ./configs/config3.yaml $YAML_URL3 || exit 1
@@ -37,11 +37,22 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y python3 python3-pip
-          pip3 install requests pyyaml
+          pip3 install requests pyyaml ruamel.yaml # 安装 ruamel.yaml
 
-#      - name: 合并YAML
-#        run: |
-#          python3 merge_yaml.py
+      - name: 合并YAML
+        run: |
+          python3 merge_yaml.py
+
+      - name: 拉取最新代码
+        run: git pull
+
+      - name: 检查是否有更改
+        run: |
+          git status
+          if [[ -z "$(git status -s)" ]]; then
+            echo "没有更改，无需提交"
+            exit 0
+          fi
 
       - name: 添加文件目录到 Git
         run: |
