@@ -44,7 +44,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y python3 python3-pip
-          pip3 install pyyaml    
+          pip3 install requests pyyaml    
 
       - name: 解码 Base64 编码的 TXT 文件
         run: |
