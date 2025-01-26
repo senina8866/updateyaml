@@ -1,0 +1,48 @@
+name: Actions-merge-clash-yaml
+
+on:
+  workflow_dispatch:   # 手动触发
+  schedule:
+    - cron: '0 */8 * * *'  # 8小时一次
+
+jobs:
+  update_yaml_configs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: 查看CPU 内存 存储
+        if: (!cancelled())
+        run: cat /proc/cpuinfo && cat /proc/meminfo && df -hT
+        
+      - name: 创建配置文件目录
+        run: |
+          echo "Before creating configs directory"
+          mkdir -p ./configs
+          echo "Configs directory created"
+          
+      - name: 安装 wget（如果未安装）
+        run: |
+          if ! command -v wget &> /dev/null
+          then
+            sudo apt-get install -y wget
+          fi
+
+      - name: 下载 Base64 编码的 TXT 文件
+        run: |
+          YAML_URL1="https://little-thunder-d99c.linzf5039.workers.dev/335581?clash"
+          YAML_URL2="https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml"
+          CURRENT_DATE=$(date +'%Y%m%d')
+          TXT_URL3="https://clashgithub.com/wp-content/uploads/rss/${CURRENT_DATE}.txt" 
+          curl -o ./configs/config1.yaml $YAML_URL1
+          curl -o ./configs/config2.yaml $YAML_URL2
+
+      - name: 添加文件目录到 Git
+        run: |
+            git config --global user.email "senina8866@gmail.com"
+            git config --global user.name "senina8866"
+            git add -f ./configs
+            git commit -m "Add Files to configs"
+            git push
