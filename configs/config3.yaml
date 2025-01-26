@@ -287,16 +287,62 @@ proxies:
   server: 42.236.73.72
   tls: true
   type: trojan
-proxy-groups: []
+proxy-groups:
+- name: Proxy
+  proxies:
+  - 高性价比机场:https://kfyun.uk
+  - 0|--1
+  - 0|--3
+  - 0|--5
+  - 0|--9
+  - 0|--10
+  - 103.44.255.81
+  - 13|🇭🇰 香港2|@ripaojiedian
+  - 13|🇭🇰 香港3|@ripaojiedian
+  - 13|🇭🇰 香港6|@ripaojiedian
+  - 13|🇹🇼 台湾|@ripaojiedian
+  - 13|🇯🇵 日本|@ripaojiedian
+  - 154.83.91.150
+  - 13|🇯🇵 日本3|@ripaojiedian
+  - 132.226.171.151
+  - 13|🇸🇬 新加坡|@ripaojiedian
+  - 13|🇸🇬 新加坡2|@ripaojiedian
+  - 13|🇺🇸 美国|@ripaojiedian
+  - 13|🇰🇷 韩国特殊|@ripaojiedian
+  - 13|🇸🇬 狮城特殊|@ripaojiedian
+  - 13|🇯🇵 日本特殊|@ripaojiedian
+  - 13|🇩🇪 德国|@ripaojiedian
+  - 103.44.255.81
+  - 14|香港2|@ripaojiedian
+  - 14|香港3|@ripaojiedian
+  - 14|香港6|@ripaojiedian
+  - 14|台湾|@ripaojiedian
+  - 14|日本|@ripaojiedian
+  - 154.83.91.150
+  - 14|日本3|@ripaojiedian
+  - 132.226.171.151
+  - 14|新加坡|@ripaojiedian
+  - 14|新加坡2|@ripaojiedian
+  - 14|美国|@ripaojiedian
+  - 14|韩国特殊|@ripaojiedian
+  - 14|狮城特殊|@ripaojiedian
+  - 14|日本特殊|@ripaojiedian
+  - 14|德国|@ripaojiedian
+  - 16|d*********g.com_2
+  - 42.236.73.72
+  type: select
 rules:
 - domain: google.com
+  outboundTag: Proxy
+  type: field
+- domain: youtube.com
   outboundTag: Proxy
   type: field
 - ip: 8.8.8.8
   outboundTag: Proxy
   type: field
-- domain: youtube.com
-  outboundTag: Proxy
+- ip: 0.0.0.0/0
+  outboundTag: DIRECT
   type: field
 - outboundTag: DIRECT
   type: final
