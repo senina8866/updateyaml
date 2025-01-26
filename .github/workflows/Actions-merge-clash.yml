@@ -27,7 +27,8 @@ jobs:
         run: |
           YAML_URL1="https://little-thunder-d99c.linzf5039.workers.dev/335581?clash"
           YAML_URL2="https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml"
-          YAML_URL3="https://clashgithub.com/wp-content/uploads/rss/$(date +%Y%m%d).yml"
+          YAML_URL3="https://clashgithub.com/wp-content/uploads/rss/20250126.yml"
+#          YAML_URL3="https://clashgithub.com/wp-content/uploads/rss/$(date +%Y%m%d).yml"
           curl -f -o ./configs/config1.yaml $YAML_URL1 || exit 1
           curl -f -o ./configs/config2.yaml $YAML_URL2 || exit 1
           curl -f -o ./configs/config3.yaml $YAML_URL3 || exit 1
