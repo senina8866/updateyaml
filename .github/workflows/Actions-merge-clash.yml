@@ -54,9 +54,9 @@ jobs:
         run: |
           python3 convert_v2ray_to_clash.py
 
-      - name: 合并YAML
-        run: |
-          python3 merge_yaml.py
+ #     - name: 合并YAML
+  #      run: |
+   #       python3 merge_yaml.py
           
           
       - name: 添加文件目录到 Git
