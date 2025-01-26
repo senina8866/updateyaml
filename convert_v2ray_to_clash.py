@@ -1,126 +1,79 @@
-import base64
 import yaml
-import re
-from urllib.parse import unquote
+import requests
 
-# 解析 ss:// 格式
-def parse_ss(url):
-    match = re.match(r"ss://([a-zA-Z0-9+/=]+)@([a-zA-Z0-9.-]+):(\d+)(#.*)?", url)
-    if match:
-        encoded_password = match.group(1)
-        server = match.group(2)
-        port = match.group(3)
-        name = unquote(match.group(4)[1:]) if match.group(4) else server
+# 从 v2ray 配置文件的 URL 下载内容
+def download_v2ray_config(url):
+    response = requests.get(url)
+    response.raise_for_status()  # 如果请求失败，会抛出异常
+    return response.text
 
-        password = base64.urlsafe_b64decode(encoded_password + '==').decode('utf-8')
-        return {
-            "name": name,
-            "type": "ss",
-            "server": server,
-            "port": int(port),
-            "cipher": "aes-256-gcm",  # 默认加密方式
-            "password": password,
-            "tls": False  # 默认禁用TLS，除非明确指定
-        }
-    return None
-
-# 解析 vmess:// 格式
-def parse_vmess(url):
-    match = re.match(r"vmess://([a-zA-Z0-9+/=]+)", url)
-    if match:
-        decoded = base64.urlsafe_b64decode(match.group(1) + '==').decode('utf-8')
-        config = yaml.safe_load(decoded)
-
-        return {
-            "name": config["ps"],
-            "type": "vmess",
-            "server": config["add"],
-            "port": config["port"],
-            "uuid": config["id"],
-            "alterId": config["aid"],
-            "cipher": "auto",
-            "tls": True if config["tls"] == "true" else False  # 确保TLS字段是布尔类型
-        }
-    return None
-
-# 解析 trojan:// 格式
-def parse_trojan(url):
-    match = re.match(r"trojan://([a-zA-Z0-9]+)@([a-zA-Z0-9.-]+):(\d+)\?([^\s]+)(#.*)?", url)
-    if match:
-        password = match.group(1)
-        server = match.group(2)
-        port = match.group(3)
-        options = match.group(4)
-        name = unquote(match.group(5)[1:]) if match.group(5) else server
-
-        return {
-            "name": name,
-            "type": "trojan",
-            "server": server,
-            "port": int(port),
-            "password": password,
-            "tls": True  # 默认启用TLS
-        }
-    return None
-
-# 读取配置文件并转换
-def convert_v2ray_to_clash(input_file, output_file):
-    proxies = []
-
-    # 读取输入文件
-    with open(input_file, 'r', encoding='utf-8') as f:
-        for line in f.readlines():
-            line = line.strip()
-            if not line:
-                continue
-
-            if line.startswith('ss://'):
-                proxy = parse_ss(line)
-            elif line.startswith('vmess://'):
-                proxy = parse_vmess(line)
-            elif line.startswith('trojan://'):
-                proxy = parse_trojan(line)
-            else:
-                continue
-
-            if proxy:
-                proxies.append(proxy)
-
-    # 填充代理组
-    proxy_group = {
-        "name": "Proxy",
-        "type": "select",
-        "proxies": [proxy["name"] for proxy in proxies]  # 使用代理节点名称作为代理组
-    }
-
-    # 构建Clash配置
+# 将 v2ray 配置转换为 clash 配置
+def convert_v2ray_to_clash(v2ray_config):
     clash_config = {
-        'proxies': proxies,
-        'proxy-groups': [proxy_group],
-        'rules': []
+        'proxies': [],
+        'proxy-groups': [],
+        'rules': [],
     }
 
-    # 添加规则部分
-    for proxy in proxies:
-        clash_config['rules'].append({
-            "type": "field",
-            "domain": proxy["name"],  # 使用代理节点名称
-            "outboundTag": "Proxy"
-        })
+    # 假设配置内容是 JSON 或 YAML 格式的，我们需要提取代理信息
+    # 此处假设 v2ray 配置是简单的文本信息，每个代理节点以 "server" 字段开头
 
-    # 添加默认的FINAL规则
-    clash_config['rules'].append({
-        "type": "final",
-        "outboundTag": "DIRECT"
-    })
+    # 根据你提供的文件内容进行解析（这里我假设是纯文本，可以按需调整）
+    lines = v2ray_config.splitlines()
+    for line in lines:
+        if "server" in line:
+            # 提取代理节点信息
+            # 假设代理节点的格式是 "server = xxx, port = xxx" 这种形式
+            parts = line.split(',')
+            server = parts[0].split('=')[1].strip()  # 获取服务器地址
+            port = parts[1].split('=')[1].strip()  # 获取端口
 
-    # 输出Clash配置
-    with open(output_file, 'w', encoding='utf-8') as f:
-        yaml.dump(clash_config, f, default_flow_style=False, allow_unicode=True)
+            # 这里需要根据实际的 v2ray 配置提取 UUID、alterId 等信息
+            # 假设 v2ray 配置文件内的 UUID 和 alterId 也有类似的字段
 
-    print(f"Clash配置已保存至 {output_file}")
+            proxy = {
+                'name': f'V2Ray-{server}',
+                'type': 'vmess',  # 假设是 vmess 类型
+                'server': server,
+                'port': int(port),
+                'uuid': 'xxxx-xxxx-xxxx-xxxx',  # 需要从配置中提取实际的 UUID
+                'alterId': 64,  # 假设值
+                'cipher': 'auto',  # 需要调整为合适的值
+                'tls': True,  # 假设启用 TLS
+            }
 
-# 执行转换
-input_file = './configs/config3.txt'  # 输入V2Ray配置文件
-output_file = './configs/config3.yaml'  # 输出Clash配置文件
-convert_v2ray_to_clash(input_file, output_file)
+            clash_config['proxies'].append(proxy)
+
+    # 添加一些默认规则，实际需要根据需求来定制
+    clash_config['rules'] = [
+        'DOMAIN-SUFFIX,google.com,PROXY',
+        'DOMAIN-KEYWORD,apple,PROXY',
+        'MATCH,DIRECT'
+    ]
+    
+    return clash_config
+
+# 将转换后的数据写入到 clash 配置文件
+def save_clash_config(file_path, clash_config):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        yaml.dump(clash_config, file, allow_unicode=True)
+
+# 主函数
+def main():
+    v2ray_url = 'https://raw.githubusercontent.com/senina8866/updateyaml/refs/heads/main/configs/config3.txt'
+    clash_file_path = './configs/config3.yaml'
+
+    # 从 URL 下载 v2ray 配置
+    v2ray_config = download_v2ray_config(v2ray_url)
+
+    # 转换 v2ray 配置为 clash 配置
+    clash_config = convert_v2ray_to_clash(v2ray_config)
+
+    # 保存 clash 配置
+    save_clash_config(clash_file_path, clash_config)
+
+    print(f"Clash 配置已保存至 {clash_file_path}")
+
+# 运行程序
+if __name__ == '__main__':
+    main()
