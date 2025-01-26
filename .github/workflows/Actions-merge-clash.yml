@@ -50,13 +50,13 @@ jobs:
         run: |
           python3 decode_base64_to_v2ray.py
 
-      - name: 转换 V2Ray URL 为 Clash YAML 格式
-        run: |
-          python3 convert_v2ray_to_clash.py
+#      - name: 转换 V2Ray URL 为 Clash YAML 格式
+#        run: |
+#          python3 convert_v2ray_to_clash.py
 
- #     - name: 合并YAML
-  #      run: |
-   #       python3 merge_yaml.py
+#      - name: 合并YAML
+#        run: |
+#          python3 merge_yaml.py
           
           
       - name: 添加文件目录到 Git
