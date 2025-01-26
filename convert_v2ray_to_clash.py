@@ -1,147 +1,125 @@
-import yaml
-import re
+# 段落1
 import base64
-import json
+import yaml
 
-def decode_v2ray_url(v2ray_url):
-    if v2ray_url.startswith('vless://'):
-        pattern = r'vless://(?P<uuid>[^@]+)@(?P<address>[^:]+):(?P<port>\d+)\?(?P<params>[^#]+)#(?P<name>.+)'
-        match = re.match(pattern, v2ray_url)
-        if not match:
-            raise ValueError("Invalid V2Ray URL format")
-        params_str = match.group('params')
-        params = {}
-        for pair in params_str.split('&'):
-            if '=' in pair:
-                key, value = pair.split('=', 1)
-                params[key] = value
-            else:
-                params[pair] = None
-        # 将alpn转换为列表
-        alpn_list = params.get('alpn', '').split(',') if 'alpn' in params else []
-        return {
-            'name': match.group('name'),
-            'type': 'vless',
-            'server': match.group('address'),
-            'port': int(match.group('port')),
-            'uuid': match.group('uuid'),
-            'security': params.get('security', 'none'),
-            'sni': params.get('sni', ''),
-            'alpn': alpn_list,
-            'network': params.get('type', 'tcp'),
-            'headers': {
-                'type': params.get('headerType', 'none')
-            }
-        }
-    elif v2ray_url.startswith('vmess://'):
-        decoded_json = base64.b64decode(v2ray_url[8:]).decode('utf-8')
-        data = json.loads(decoded_json)
-        return {
-            'name': data['ps'],
-            'type': 'vmess',
-            'server': data['add'],
-            'port': int(data['port']),
-            'uuid': data['id'],
-        'alterId': int(data['aid']),
-        'cipher': 'auto',
-        'tls': True if data.get('tls', 'none') == 'tls' else False,
-        'network': data.get('net', 'tcp'),
-        'ws-opts': {
-            'path': data.get('path', ''),
-            'headers': {
-                'Host': data.get('host', '')
-            }
-        }
-    }
-elif v2ray_url.startswith('trojan://'):
-    pattern = r'trojan://(?P<password>[^@]+)@(?P<address>[^:]+):(?P<port>\d+)\?(?P<params>[^#]+)#(?P<name>.+)'
-    match = re.match(pattern, v2ray_url)
-    if not match:
-        raise ValueError("Invalid Trojan URL format")
-    params_str = match.group('params')
-    params = {}
-    for pair in params_str.split('&'):
-        if '=' in pair:
-            key, value = pair.split('=', 1)
-            params[key] = value
-        else:
-            params[pair] = None
-    return {
-        'name': match.group('name'),
-        'type': 'trojan',
-        'server': match.group('address'),
-        'port': int(match.group('port')),
-        'password': match.group('password'),
-        'sni': params.get('sni', ''),
-        'alpn': params.get('alpn', '').split(',') if 'alpn' in params else [],
-        'network': 'tcp',
-        'tls': True
-    }
-else:
-    raise ValueError("Unsupported V2Ray URL type")
-def save_as_yaml(proxies, output_file, rules, groups):
-    clash_config = {
+# 解析V2Ray TXT的各个部分并转换为Clash YAML格式
+def parse_v2ray_txt(input_file, output_file):
+    with open(input_file, 'r') as f:
+        lines = f.readlines()
+
+    proxies = []
+
+    for line in lines:
+        line = line.strip()
+        if line.startswith('ss://'):
+            proxies.append(parse_ss(line))
+        elif line.startswith('trojan://'):
+            proxies.append(parse_trojan(line))
+        elif line.startswith('vmess://'):
+            proxies.append(parse_vmess(line))
+        elif line.startswith('vless://'):
+            proxies.append(parse_vless(line))
+
+    config = {
         'proxies': proxies,
-        'proxy-groups': groups,
-        'rules': rules
+        'proxy-groups': [
+            {
+                'name': 'Auto',
+                'type': 'url-test',
+                'proxies': [proxy['name'] for proxy in proxies],
+                'url': 'http://www.google.com/generate_204',
+                'interval': 300
+            }
+        ]
     }
+
     with open(output_file, 'w') as f:
-        yaml.dump(clash_config, f, allow_unicode=True)
+        yaml.dump(config, f, allow_unicode=True)
+
+# 解析SS协议
+def parse_ss(url):
+    decoded = base64.urlsafe_b64decode(url[5:]).decode('utf-8')
+    parts = decoded.split('@')
+    method_password, server_port = parts[0], parts[1]
+    method, password = method_password.split(':')
+    server, port = server_port.split(':')
+    return {
+        'name': 'SS-' + server,
+        'type': 'ss',
+        'server': server,
+        'port': int(port),
+        'cipher': method,
+        'password': password
+    }
+# 段落2
+# 解析Trojan协议
+def parse_trojan(url):
+    main_part, params = url[9:].split('?', 1)
+    user_pass, server_port = main_part.split('@')
+    username, password = user_pass.split(':')
+    server, port = server_port.split(':')
+
+    param_dict = dict(param.split('=') for param in params.split('&'))
+
+    return {
+        'name': 'Trojan-' + server,
+        'type': 'trojan',
+        'server': server,
+        'port': int(port),
+        'password': username,
+        'sni': param_dict.get('sni', ''),
+        'network': param_dict.get('type', 'tcp'),
+        'ws-opts': {
+            'path': param_dict.get('path', ''),
+            'headers': {
+                'Host': param_dict.get('host', '')
+            }
+        }
+    }
+
+# 解析VMess协议
+def parse_vmess(url):
+    data = base64.urlsafe_b64decode(url[8:]).decode('utf-8')
+    vmess_config = yaml.safe_load(data)
+
+    return {
+        'name': 'VMess-' + vmess_config['add'],
+        'type': 'vmess',
+        'server': vmess_config['add'],
+        'port': int(vmess_config['port']),
+        'uuid': vmess_config['id'],
+        'alterId': vmess_config.get('aid', 0),
+        'cipher': vmess_config.get('scy', 'auto'),
+        'network': vmess_config['net'],
+        'tls': vmess_config.get('tls', False)
+    }
+# 段落3
+# 解析VLESS协议
+def parse_vless(url):
+    main_part, params = url[8:].split('?', 1)
+    uuid_server, server_port = main_part.split('@')
+    uuid, server = uuid_server.split(':')
+    port = server_port.split(':')[1]
+
+    param_dict = dict(param.split('=') for param in params.split('&'))
+
+    return {
+        'name': 'VLESS-' + server,
+        'type': 'vless',
+        'server': server,
+        'port': int(port),
+        'uuid': uuid,
+        'tls': param_dict.get('security', '') == 'tls',
+        'network': param_dict.get('type', 'tcp'),
+        'ws-opts': {
+            'path': param_dict.get('path', ''),
+            'headers': {
+                'Host': param_dict.get('sni', '')
+            }
+        }
+    }
 
 if __name__ == "__main__":
-    with open('./configs/config3.txt', 'r') as f:
-        v2ray_urls = f.read().splitlines()
-
-    proxies = [decode_v2ray_url(url) for url in v2ray_urls if url.startswith(("vless://", "vmess://", "trojan://"))]
-
-    rules = [
-        'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.list,🎯 全球直连',
-        'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.list,🎯 全球直连',
-        'RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list,🛑 全球拦截',
-        'RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list,🍃 应用净化',
-        'RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCN.list,🎯 全球直连',
-        'RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/SteamCN.list,🎯 全球直连',
-        'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bing/Bing.list,Ⓜ️ Copilot',
-        'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.list,Ⓜ️ Copilot'
-    ]
-rules.extend([
-    'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.list,Ⓜ️ 微软服务',
-    'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.list,🍎 苹果服务',
-    'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list,📲 Telegram',
-    'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list,💬 OpenAi',
-    'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.list,💬 OpenAi',
-    'RULE-SET,https://raw.githubusercontent.com/coco-yan/proxy_ruleset/dev/rule_addition.list,💬 OpenAi',
-    'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.list,🎥 Netflix',
-    'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia.list,🌍 国外媒体',
-    'RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyLite.list,🚀 节点选择',
-    'RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list,🎯 全球直连',
-    'RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list,🎯 全球直连',
-    'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.list,🎯 全球直连',
-    'GEOIP,CN,🎯 全球直连',
-    'FINAL,🐟 漏网之鱼'
-])
-
-groups = [
-    {
-        'name': '🚀 节点选择',
-        'type': 'select',
-        'proxies': ['DIRECT'] + [proxy['name'] for proxy in proxies]
-    },
-    {
-        'name': '🚀 手动切换',
-        'type': 'select',
-        'proxies': ['♻️ Auto'] + [proxy['name'] for proxy in proxies]
-    },
-    {
-        'name': '♻️ Auto',
-        'type': 'select',
-        'proxies': ['DIRECT'] + [proxy['name'] for proxy in proxies]
-    },
-    {
-        'name': '🌍 国外媒体',
-        'type': 'select',
-        'proxies': ['DIRECT'] + [proxy['name'] for proxy in proxies]
-    }
-]
-save_as_yaml(proxies, './configs/config3.yaml', rules, groups)
-print("转换完成，并保存为 ./configs/config3.yaml")
+    input_path = "./configs/config3.txt"
+    output_path = "./configs/config3.yaml"
+    parse_v2ray_txt(input_path, output_path)
