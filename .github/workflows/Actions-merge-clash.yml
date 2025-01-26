@@ -38,20 +38,9 @@ jobs:
           sudo apt-get install -y python3 python3-pip
           pip3 install requests pyyaml
 
-      - name: 合并YAML
-        run: |
-          python3 merge_yaml.py
-
-      - name: 拉取最新代码
-        run: git pull
-
-      - name: 检查是否有更改
-        run: |
-          git status
-          if [[ -z "$(git status -s)" ]]; then
-            echo "没有更改，无需提交"
-            exit 0
-          fi
+#      - name: 合并YAML
+#        run: |
+#          python3 merge_yaml.py
 
       - name: 添加文件目录到 Git
         run: |
