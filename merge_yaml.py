@@ -1,7 +1,7 @@
 import os
 from ruamel.yaml import YAML
 
-def merge_yaml(file1, file2):  # 只传入两个文件参数
+def merge_yaml(file1, file2, output_file):
     yaml = YAML()
     yaml.indent(mapping=2, sequence=4, offset=2)
     files_exist = [os.path.exists(file) for file in [file1, file2]]
@@ -36,7 +36,7 @@ def merge_yaml(file1, file2):  # 只传入两个文件参数
     # 去重 proxy-groups
     if 'proxy-groups' in merged_data:
         group_dict = {group['name']: group for group in merged_data['proxy-groups']}
-        for group_list in [data1, data2]:  # 只遍历两个文件
+        for group_list in [data1, data2]:
             for group in group_list.get('proxy-groups', []):
                 name = group['name']
                 if name in group_dict:
@@ -50,16 +50,15 @@ def merge_yaml(file1, file2):  # 只传入两个文件参数
     if 'rules' in merged_data:
         merged_data['rules'] = list(set(merged_data['rules']))
 
-    return yaml.dump(merged_data)
+    # 将合并后的数据写入输出文件
+    with open(output_file, 'w', encoding='utf-8') as f:
+        yaml.dump(merged_data, stream=f)
 
 if __name__ == "__main__":
     file1 = './configs/config1.yaml'
     file2 = './configs/config2.yaml'
-    # file3 = './configs/config3.yaml'  # 移除 file3
-    merged_yaml = merge_yaml(file1, file2)  # 只传入两个文件
-    if merged_yaml:
-        with open('./configs/config_merged.yaml', 'w', encoding='utf-8') as f:
-            f.write(merged_yaml)
+    merged_yaml = merge_yaml(file1, file2, "./configs/config_merged.yaml")
+    if merged_yaml is not None:  # 检查 merge_yaml 是否成功
         print("YAML文件合并完成，已保存到 ./configs/config_merged.yaml")
     else:
         print("YAML合并失败")
