@@ -1,15 +1,11 @@
+import os
 import yaml
 
 def merge_yaml(file1, file2):
-    """合并两个YAML文件。
+    if not os.path.exists(file1) or not os.path.exists(file2):
+        print("一个或多个文件路径无效")
+        return None
 
-    Args:
-      file1: 第一个YAML文件的路径。
-      file2: 第二个YAML文件的路径。
-
-    Returns:
-      合并后的YAML内容字符串。
-    """
     with open(file1, 'r', encoding='utf-8') as f1, open(file2, 'r', encoding='utf-8') as f2:
         try:
             data1 = yaml.safe_load(f1)
@@ -18,33 +14,37 @@ def merge_yaml(file1, file2):
             print(f"YAML文件加载错误: {e}")
             return None
 
-    # 合并proxies
-    data1['proxies'].extend(data2['proxies'])
+    # 确保键存在
+    for key in ['proxies', 'proxy-groups', 'rules']:
+        if key not in data1:
+            data1[key] = []
+        if key not in data2:
+            data2[key] = []
 
-    # 合并proxy-groups
+    # 合并并去重proxies
+    data1['proxies'] = list({v['name']:v for v in data1['proxies'] + data2['proxies']}.values())
+
+    # 合并并去重proxy-groups
+    group_dict = {group['name']: group for group in data1['proxy-groups']}
     for group2 in data2['proxy-groups']:
         name2 = group2['name']
-        found = False
-        for group1 in data1['proxy-groups']:
-            if group1['name'] == name2:
-                group1['proxies'].extend(group2['proxies'])
-                found = True
-                break
-        if not found:
-            data1['proxy-groups'].append(group2)
+        if name2 in group_dict:
+            existing_group = group_dict[name2]
+            existing_group['proxies'] = list(set(existing_group['proxies'] + group2['proxies']))
+        else:
+            group_dict[name2] = group2
+    data1['proxy-groups'] = list(group_dict.values())
 
-    # 合并rules
-    data1['rules'].extend(data2['rules'])
+    # 合并并去重rules
+    data1['rules'] = list(set(data1['rules'] + data2['rules']))
 
-    # 返回合并后的YAML字符串
     return yaml.dump(data1, allow_unicode=True, sort_keys=False)
 
 if __name__ == "__main__":
-    file1 = './configs/config1.yaml'  # 确保路径是正确的
+    file1 = './configs/config1.yaml'
     file2 = './configs/config2.yaml'
     merged_yaml = merge_yaml(file1, file2)
     if merged_yaml:
-        # 直接写入到 configs 文件夹
         with open('./configs/config_merged.yaml', 'w', encoding='utf-8') as f:
             f.write(merged_yaml)
         print("YAML文件合并完成，已保存到 ./configs/config_merged.yaml")
