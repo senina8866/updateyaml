@@ -89,12 +89,18 @@ def convert_v2ray_to_clash(input_file, output_file):
     # 构建Clash配置
     clash_config = {
         'proxies': proxies,
-        'proxy-groups': [],
+        'proxy-groups': [
+            {
+                "name": "Proxy",
+                "type": "select",
+                "proxies": [proxy["name"] for proxy in proxies]  # 使用代理节点名称作为代理组
+            }
+        ],
         'rules': [
-            # 示例规则
             {"type": "field", "domain": "google.com", "outboundTag": "Proxy"},
-            {"type": "field", "ip": "8.8.8.8", "outboundTag": "Proxy"},
             {"type": "field", "domain": "youtube.com", "outboundTag": "Proxy"},
+            {"type": "field", "ip": "8.8.8.8", "outboundTag": "Proxy"},
+            {"type": "field", "ip": "0.0.0.0/0", "outboundTag": "DIRECT"},
             {"type": "final", "outboundTag": "DIRECT"}
         ]
     }
