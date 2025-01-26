@@ -5,7 +5,6 @@ from urllib.parse import unquote
 
 # 解析 ss:// 格式
 def parse_ss(url):
-    # 格式: ss://<base64-encoded-password>@<server>:<port>#<name>
     match = re.match(r"ss://([a-zA-Z0-9+/=]+)@([a-zA-Z0-9.-]+):(\d+)(#.*)?", url)
     if match:
         encoded_password = match.group(1)
@@ -20,13 +19,13 @@ def parse_ss(url):
             "server": server,
             "port": int(port),
             "cipher": "aes-256-gcm",  # 默认加密方式
-            "password": password
+            "password": password,
+            "tls": False  # 默认禁用TLS，除非明确指定
         }
     return None
 
 # 解析 vmess:// 格式
 def parse_vmess(url):
-    # 格式: vmess://<base64-encoded-json>
     match = re.match(r"vmess://([a-zA-Z0-9+/=]+)", url)
     if match:
         decoded = base64.urlsafe_b64decode(match.group(1) + '==').decode('utf-8')
@@ -40,13 +39,12 @@ def parse_vmess(url):
             "uuid": config["id"],
             "alterId": config["aid"],
             "cipher": "auto",
-            "tls": config["tls"]
+            "tls": True if config["tls"] == "true" else False  # 确保TLS字段是布尔类型
         }
     return None
 
 # 解析 trojan:// 格式
 def parse_trojan(url):
-    # 格式: trojan://<password>@<server>:<port>?<options>#<name>
     match = re.match(r"trojan://([a-zA-Z0-9]+)@([a-zA-Z0-9.-]+):(\d+)\?([^\s]+)(#.*)?", url)
     if match:
         password = match.group(1)
@@ -61,7 +59,7 @@ def parse_trojan(url):
             "server": server,
             "port": int(port),
             "password": password,
-            "tls": True
+            "tls": True  # 默认启用TLS
         }
     return None
 
@@ -92,7 +90,13 @@ def convert_v2ray_to_clash(input_file, output_file):
     clash_config = {
         'proxies': proxies,
         'proxy-groups': [],
-        'rules': []
+        'rules': [
+            # 示例规则
+            {"type": "field", "domain": "google.com", "outboundTag": "Proxy"},
+            {"type": "field", "ip": "8.8.8.8", "outboundTag": "Proxy"},
+            {"type": "field", "domain": "youtube.com", "outboundTag": "Proxy"},
+            {"type": "final", "outboundTag": "DIRECT"}
+        ]
     }
 
     # 输出Clash配置
