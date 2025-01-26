@@ -1,5 +1,5 @@
 proxies:
-- alpn: ''
+- alpn: []
   name: 13|🇭🇰 香港|@ripaojiedian
   network: tcp
   password: ouo
@@ -34,7 +34,7 @@ proxies:
     headers:
       Host: ''
     path: ''
-- alpn: ''
+- alpn: []
   name: 13,14|香港4|@ripaojiedian
   network: tcp
   password: 9e2a92c6-bbe6-49fa-a280-e6f8f3eed7c5
@@ -69,7 +69,7 @@ proxies:
     headers:
       Host: ''
     path: ''
-- alpn: ''
+- alpn: []
   name: 13|🇯🇵 日本2|@ripaojiedian
   network: tcp
   password: ouo
@@ -78,7 +78,7 @@ proxies:
   sni: tr.koxok.us.kg
   tls: 'true'
   type: trojan
-- alpn: ''
+- alpn: []
   name: 13|🇰🇷 韩国|@ripaojiedian
   network: tcp
   password: ouo
@@ -100,7 +100,7 @@ proxies:
     headers:
       Host: ''
     path: ''
-- alpn: ''
+- alpn: []
   name: 13,14|新加坡3|@ripaojiedian
   network: tcp
   password: 9e2a92c6-bbe6-49fa-a280-e6f8f3eed7c5
@@ -122,7 +122,7 @@ proxies:
     headers:
       Host: ''
     path: ''
-- alpn: ''
+- alpn: []
   name: 13,14|美国2|@ripaojiedian
   network: tcp
   password: 2b39bbdd-a565-4f8e-b6b6-6b034b2076f4
@@ -144,7 +144,7 @@ proxies:
     headers:
       Host: ''
     path: ''
-- alpn: ''
+- alpn: []
   name: 14|香港|@ripaojiedian
   network: tcp
   password: ouo
@@ -205,7 +205,7 @@ proxies:
     headers:
       Host: ''
     path: ''
-- alpn: ''
+- alpn: []
   name: 14|日本2|@ripaojiedian
   network: tcp
   password: ouo
@@ -214,7 +214,7 @@ proxies:
   sni: tr.koxok.us.kg
   tls: 'true'
   type: trojan
-- alpn: ''
+- alpn: []
   name: 14|韩国|@ripaojiedian
   network: tcp
   password: ouo
@@ -262,7 +262,8 @@ proxies:
     headers:
       Host: ''
     path: ''
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|AR_speednode_0001
@@ -273,7 +274,8 @@ proxies:
   sni: ''
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|AR_speednode_0002
@@ -284,7 +286,8 @@ proxies:
   sni: eze-1.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|BE_speednode_0003
@@ -295,7 +298,8 @@ proxies:
   sni: bru-be-01.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|BR_speednode_0004
@@ -306,7 +310,8 @@ proxies:
   sni: sao-br.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|BR_speednode_0005
@@ -317,7 +322,8 @@ proxies:
   sni: ''
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|CO_speednode_0016
@@ -328,7 +334,8 @@ proxies:
   sni: bog-co-01.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|CO_speednode_0017
@@ -339,7 +346,8 @@ proxies:
   sni: ''
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|DE_speednode_0020
@@ -350,7 +358,8 @@ proxies:
   sni: de1.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: http/1.1
+- alpn:
+  - http/1.1
   headers:
     type: none
   name: 15|DE_speednode_0025
@@ -361,7 +370,8 @@ proxies:
   sni: spotify.com
   type: vless
   uuid: 1051bfbb-90db-4261-b5e4-8b91f62b436f
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|ES_speednode_0026
@@ -372,7 +382,8 @@ proxies:
   sni: mad-es.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|ES_speednode_0027
@@ -383,7 +394,7 @@ proxies:
   sni: ''
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: ''
+- alpn: []
   headers:
     type: none
   name: 15|FR_speednode_0028
@@ -394,7 +405,8 @@ proxies:
   sni: telewebion.com
   type: vless
   uuid: 91989253-37d6-4d28-83fe-8ffd0c3de0f7
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|GB_speednode_0030
@@ -405,7 +417,8 @@ proxies:
   sni: osl-no-01.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|GR_speednode_0031
@@ -416,7 +429,8 @@ proxies:
   sni: ''
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|GR_speednode_0032
@@ -427,7 +441,8 @@ proxies:
   sni: ath-gr-01.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|IN_speednode_0034
@@ -438,7 +453,8 @@ proxies:
   sni: blr-in.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|KZ_speednode_0037
@@ -449,7 +465,8 @@ proxies:
   sni: ''
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|PE_speednode_0038
@@ -460,7 +477,8 @@ proxies:
   sni: ''
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|PE_speednode_0039
@@ -471,7 +489,7 @@ proxies:
   sni: lim-pe-01.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: ''
+- alpn: []
   headers:
     type: none
   name: 15|RU_speednode_0042
@@ -482,7 +500,8 @@ proxies:
   sni: mmdserver.us.kg
   type: vless
   uuid: 41abecd9-8096-4142-a75c-4e1d36d990bd
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|SG_speednode_0044
@@ -493,7 +512,8 @@ proxies:
   sni: sin-sg-01.fromblancwithlove.com
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|SG_speednode_0045
@@ -504,7 +524,7 @@ proxies:
   sni: ''
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: ''
+- alpn: []
   headers:
     type: none
   name: 15|US_speednode_0047
@@ -515,7 +535,8 @@ proxies:
   sni: mmdserver.us.kg
   type: vless
   uuid: 41abecd9-8096-4142-a75c-4e1d36d990bd
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|ZA_speednode_0049
@@ -526,7 +547,8 @@ proxies:
   sni: ''
   type: vless
   uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
-- alpn: h2
+- alpn:
+  - h2
   headers:
     type: none
   name: 15|ZA_speednode_0050
@@ -550,7 +572,8 @@ proxies:
     headers:
       Host: ''
     path: ''
-- alpn: http/1.1
+- alpn:
+  - http/1.1
   headers:
     type: none
   name: 16|d*********g.com_6
@@ -561,7 +584,8 @@ proxies:
   sni: www.zitian.cn
   type: vless
   uuid: 11916472-4e2c-49c6-b75d-71196b3a7ecf
-- alpn: http/1.1
+- alpn:
+  - http/1.1
   name: 16|d*********g.com_3
   network: tcp
   password: fuck
@@ -737,281 +761,6 @@ proxy-groups:
   - 16|d*********g.com_3
   type: select
 - name: 🌍 国外媒体
-  proxies:
-  - DIRECT
-  - 13|🇭🇰 香港|@ripaojiedian
-  - 13|🇭🇰 香港2|@ripaojiedian
-  - 13|🇭🇰 香港3|@ripaojiedian
-  - 13,14|香港4|@ripaojiedian
-  - 13|🇭🇰 香港6|@ripaojiedian
-  - 13|🇯🇵 日本|@ripaojiedian
-  - 13|🇯🇵 日本2|@ripaojiedian
-  - 13|🇰🇷 韩国|@ripaojiedian
-  - 13|🇸🇬 新加坡2|@ripaojiedian
-  - 13,14|新加坡3|@ripaojiedian
-  - 13|🇺🇸 美国|@ripaojiedian
-  - 13,14|美国2|@ripaojiedian
-  - 13|🇩🇪 德国|@ripaojiedian
-  - 14|香港|@ripaojiedian
-  - 14|香港2|@ripaojiedian
-  - 14|香港3|@ripaojiedian
-  - 14|香港6|@ripaojiedian
-  - 14|日本|@ripaojiedian
-  - 14|日本2|@ripaojiedian
-  - 14|韩国|@ripaojiedian
-  - 14|新加坡2|@ripaojiedian
-  - 14|美国|@ripaojiedian
-  - 14|德国|@ripaojiedian
-  - 15|AR_speednode_0001
-  - 15|AR_speednode_0002
-  - 15|BE_speednode_0003
-  - 15|BR_speednode_0004
-  - 15|BR_speednode_0005
-  - 15|CO_speednode_0016
-  - 15|CO_speednode_0017
-  - 15|DE_speednode_0020
-  - 15|DE_speednode_0025
-  - 15|ES_speednode_0026
-  - 15|ES_speednode_0027
-  - 15|FR_speednode_0028
-  - 15|GB_speednode_0030
-  - 15|GR_speednode_0031
-  - 15|GR_speednode_0032
-  - 15|IN_speednode_0034
-  - 15|KZ_speednode_0037
-  - 15|PE_speednode_0038
-  - 15|PE_speednode_0039
-  - 15|RU_speednode_0042
-  - 15|SG_speednode_0044
-  - 15|SG_speednode_0045
-  - 15|US_speednode_0047
-  - 15|ZA_speednode_0049
-  - 15|ZA_speednode_0050
-  - 16|d*********g.com_2
-  - 16|d*********g.com_6
-  - 16|d*********g.com_3
-  type: select
-- name: 💬 OpenAi
-  proxies:
-  - DIRECT
-  - 13|🇭🇰 香港|@ripaojiedian
-  - 13|🇭🇰 香港2|@ripaojiedian
-  - 13|🇭🇰 香港3|@ripaojiedian
-  - 13,14|香港4|@ripaojiedian
-  - 13|🇭🇰 香港6|@ripaojiedian
-  - 13|🇯🇵 日本|@ripaojiedian
-  - 13|🇯🇵 日本2|@ripaojiedian
-  - 13|🇰🇷 韩国|@ripaojiedian
-  - 13|🇸🇬 新加坡2|@ripaojiedian
-  - 13,14|新加坡3|@ripaojiedian
-  - 13|🇺🇸 美国|@ripaojiedian
-  - 13,14|美国2|@ripaojiedian
-  - 13|🇩🇪 德国|@ripaojiedian
-  - 14|香港|@ripaojiedian
-  - 14|香港2|@ripaojiedian
-  - 14|香港3|@ripaojiedian
-  - 14|香港6|@ripaojiedian
-  - 14|日本|@ripaojiedian
-  - 14|日本2|@ripaojiedian
-  - 14|韩国|@ripaojiedian
-  - 14|新加坡2|@ripaojiedian
-  - 14|美国|@ripaojiedian
-  - 14|德国|@ripaojiedian
-  - 15|AR_speednode_0001
-  - 15|AR_speednode_0002
-  - 15|BE_speednode_0003
-  - 15|BR_speednode_0004
-  - 15|BR_speednode_0005
-  - 15|CO_speednode_0016
-  - 15|CO_speednode_0017
-  - 15|DE_speednode_0020
-  - 15|DE_speednode_0025
-  - 15|ES_speednode_0026
-  - 15|ES_speednode_0027
-  - 15|FR_speednode_0028
-  - 15|GB_speednode_0030
-  - 15|GR_speednode_0031
-  - 15|GR_speednode_0032
-  - 15|IN_speednode_0034
-  - 15|KZ_speednode_0037
-  - 15|PE_speednode_0038
-  - 15|PE_speednode_0039
-  - 15|RU_speednode_0042
-  - 15|SG_speednode_0044
-  - 15|SG_speednode_0045
-  - 15|US_speednode_0047
-  - 15|ZA_speednode_0049
-  - 15|ZA_speednode_0050
-  - 16|d*********g.com_2
-  - 16|d*********g.com_6
-  - 16|d*********g.com_3
-  type: select
-- name: Ⓜ️ Copilot
-  proxies:
-  - DIRECT
-  - 13|🇭🇰 香港|@ripaojiedian
-  - 13|🇭🇰 香港2|@ripaojiedian
-  - 13|🇭🇰 香港3|@ripaojiedian
-  - 13,14|香港4|@ripaojiedian
-  - 13|🇭🇰 香港6|@ripaojiedian
-  - 13|🇯🇵 日本|@ripaojiedian
-  - 13|🇯🇵 日本2|@ripaojiedian
-  - 13|🇰🇷 韩国|@ripaojiedian
-  - 13|🇸🇬 新加坡2|@ripaojiedian
-  - 13,14|新加坡3|@ripaojiedian
-  - 13|🇺🇸 美国|@ripaojiedian
-  - 13,14|美国2|@ripaojiedian
-  - 13|🇩🇪 德国|@ripaojiedian
-  - 14|香港|@ripaojiedian
-  - 14|香港2|@ripaojiedian
-  - 14|香港3|@ripaojiedian
-  - 14|香港6|@ripaojiedian
-  - 14|日本|@ripaojiedian
-  - 14|日本2|@ripaojiedian
-  - 14|韩国|@ripaojiedian
-  - 14|新加坡2|@ripaojiedian
-  - 14|美国|@ripaojiedian
-  - 14|德国|@ripaojiedian
-  - 15|AR_speednode_0001
-  - 15|AR_speednode_0002
-  - 15|BE_speednode_0003
-  - 15|BR_speednode_0004
-  - 15|BR_speednode_0005
-  - 15|CO_speednode_0016
-  - 15|CO_speednode_0017
-  - 15|DE_speednode_0020
-  - 15|DE_speednode_0025
-  - 15|ES_speednode_0026
-  - 15|ES_speednode_0027
-  - 15|FR_speednode_0028
-  - 15|GB_speednode_0030
-  - 15|GR_speednode_0031
-  - 15|GR_speednode_0032
-  - 15|IN_speednode_0034
-  - 15|KZ_speednode_0037
-  - 15|PE_speednode_0038
-  - 15|PE_speednode_0039
-  - 15|RU_speednode_0042
-  - 15|SG_speednode_0044
-  - 15|SG_speednode_0045
-  - 15|US_speednode_0047
-  - 15|ZA_speednode_0049
-  - 15|ZA_speednode_0050
-  - 16|d*********g.com_2
-  - 16|d*********g.com_6
-  - 16|d*********g.com_3
-  type: select
-- name: Ⓜ️ 微软服务
-  proxies:
-  - DIRECT
-  - 13|🇭🇰 香港|@ripaojiedian
-  - 13|🇭🇰 香港2|@ripaojiedian
-  - 13|🇭🇰 香港3|@ripaojiedian
-  - 13,14|香港4|@ripaojiedian
-  - 13|🇭🇰 香港6|@ripaojiedian
-  - 13|🇯🇵 日本|@ripaojiedian
-  - 13|🇯🇵 日本2|@ripaojiedian
-  - 13|🇰🇷 韩国|@ripaojiedian
-  - 13|🇸🇬 新加坡2|@ripaojiedian
-  - 13,14|新加坡3|@ripaojiedian
-  - 13|🇺🇸 美国|@ripaojiedian
-  - 13,14|美国2|@ripaojiedian
-  - 13|🇩🇪 德国|@ripaojiedian
-  - 14|香港|@ripaojiedian
-  - 14|香港2|@ripaojiedian
-  - 14|香港3|@ripaojiedian
-  - 14|香港6|@ripaojiedian
-  - 14|日本|@ripaojiedian
-  - 14|日本2|@ripaojiedian
-  - 14|韩国|@ripaojiedian
-  - 14|新加坡2|@ripaojiedian
-  - 14|美国|@ripaojiedian
-  - 14|德国|@ripaojiedian
-  - 15|AR_speednode_0001
-  - 15|AR_speednode_0002
-  - 15|BE_speednode_0003
-  - 15|BR_speednode_0004
-  - 15|BR_speednode_0005
-  - 15|CO_speednode_0016
-  - 15|CO_speednode_0017
-  - 15|DE_speednode_0020
-  - 15|DE_speednode_0025
-  - 15|ES_speednode_0026
-  - 15|ES_speednode_0027
-  - 15|FR_speednode_0028
-  - 15|GB_speednode_0030
-  - 15|GR_speednode_0031
-  - 15|GR_speednode_0032
-  - 15|IN_speednode_0034
-  - 15|KZ_speednode_0037
-  - 15|PE_speednode_0038
-  - 15|PE_speednode_0039
-  - 15|RU_speednode_0042
-  - 15|SG_speednode_0044
-  - 15|SG_speednode_0045
-  - 15|US_speednode_0047
-  - 15|ZA_speednode_0049
-  - 15|ZA_speednode_0050
-  - 16|d*********g.com_2
-  - 16|d*********g.com_6
-  - 16|d*********g.com_3
-  type: select
-- name: 🍎 苹果服务
-  proxies:
-  - DIRECT
-  - 13|🇭🇰 香港|@ripaojiedian
-  - 13|🇭🇰 香港2|@ripaojiedian
-  - 13|🇭🇰 香港3|@ripaojiedian
-  - 13,14|香港4|@ripaojiedian
-  - 13|🇭🇰 香港6|@ripaojiedian
-  - 13|🇯🇵 日本|@ripaojiedian
-  - 13|🇯🇵 日本2|@ripaojiedian
-  - 13|🇰🇷 韩国|@ripaojiedian
-  - 13|🇸🇬 新加坡2|@ripaojiedian
-  - 13,14|新加坡3|@ripaojiedian
-  - 13|🇺🇸 美国|@ripaojiedian
-  - 13,14|美国2|@ripaojiedian
-  - 13|🇩🇪 德国|@ripaojiedian
-  - 14|香港|@ripaojiedian
-  - 14|香港2|@ripaojiedian
-  - 14|香港3|@ripaojiedian
-  - 14|香港6|@ripaojiedian
-  - 14|日本|@ripaojiedian
-  - 14|日本2|@ripaojiedian
-  - 14|韩国|@ripaojiedian
-  - 14|新加坡2|@ripaojiedian
-  - 14|美国|@ripaojiedian
-  - 14|德国|@ripaojiedian
-  - 15|AR_speednode_0001
-  - 15|AR_speednode_0002
-  - 15|BE_speednode_0003
-  - 15|BR_speednode_0004
-  - 15|BR_speednode_0005
-  - 15|CO_speednode_0016
-  - 15|CO_speednode_0017
-  - 15|DE_speednode_0020
-  - 15|DE_speednode_0025
-  - 15|ES_speednode_0026
-  - 15|ES_speednode_0027
-  - 15|FR_speednode_0028
-  - 15|GB_speednode_0030
-  - 15|GR_speednode_0031
-  - 15|GR_speednode_0032
-  - 15|IN_speednode_0034
-  - 15|KZ_speednode_0037
-  - 15|PE_speednode_0038
-  - 15|PE_speednode_0039
-  - 15|RU_speednode_0042
-  - 15|SG_speednode_0044
-  - 15|SG_speednode_0045
-  - 15|US_speednode_0047
-  - 15|ZA_speednode_0049
-  - 15|ZA_speednode_0050
-  - 16|d*********g.com_2
-  - 16|d*********g.com_6
-  - 16|d*********g.com_3
-  type: select
-- name: 📲 Telegram
   proxies:
   - DIRECT
   - 13|🇭🇰 香港|@ripaojiedian
