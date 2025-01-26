@@ -7,7 +7,16 @@ def decode_v2ray_url(v2ray_url):
     if not match:
         raise ValueError("Invalid V2Ray URL format")
 
-    params = dict(pair.split('=') for pair in match.group('params').split('&'))
+    # 改进参数解析部分
+    params_str = match.group('params')
+    params = {}
+    for pair in params_str.split('&'):
+        if '=' in pair:
+            key, value = pair.split('=', 1)
+            params[key] = value
+        else:
+            params[pair] = None
+
     clash_proxy = {
         'name': match.group('name'),
         'type': 'vless',
