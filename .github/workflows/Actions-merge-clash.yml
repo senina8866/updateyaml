@@ -30,15 +30,19 @@ jobs:
             sudo apt-get install -y wget
           fi
 
-      - name: 下载 YAML 配置文件
+      - name: 下载 Base64 编码的 TXT 文件
         run: |
           YAML_URL1="https://little-thunder-d99c.linzf5039.workers.dev/335581?clash"
           YAML_URL2="https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml"
           CURRENT_DATE=$(date +'%Y%m%d')
-          YAML_URL3="https://clashgithub.com/wp-content/uploads/rss/${CURRENT_DATE}.yml"
-          wget -O ./configs/config1.yaml $YAML_URL1
-          wget -O ./configs/config2.yaml $YAML_URL2
-          wget -O ./configs/config3.yaml $YAML_URL3
+          TXT_URL3="https://clashgithub.com/wp-content/uploads/rss/${CURRENT_DATE}.txt" 
+          curl -o ./configs/config1.yaml $YAML_URL1
+          curl -o ./configs/config2.yaml $YAML_URL2
+          curl -o ./configs/config3.txt $TXT_URL3
+
+- name: 解码并转换格式
+  run: |
+    python3 decode_and_convert.py
 
       - name: 安装 Python 3 和依赖
         run: |
