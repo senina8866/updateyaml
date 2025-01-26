@@ -56,8 +56,8 @@ jobs:
 
       - name: 添加文件目录到 Git
         run: |
-          git config --global user.email "${{ secrets.GIT_EMAIL }}"
-          git config --global user.name "${{ secrets.GIT_USERNAME }}"
+          git config --global user.email "senina8866@gmail.com"
+          git config --global user.name "senina8866"
           git add -f ./configs
           git commit -m "Add Files to configs"
           git push
