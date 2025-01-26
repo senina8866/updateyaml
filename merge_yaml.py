@@ -1,47 +1,61 @@
 import os
-import yaml
+from ruamel.yaml import YAML
 
 def merge_yaml(file1, file2, file3):
+    yaml = YAML()
+    yaml.indent(mapping=2, sequence=4, offset=2)
     if not os.path.exists(file1) or not os.path.exists(file2) or not os.path.exists(file3):
         print("一个或多个文件路径无效")
         return None
 
-    with open(file1, 'r', encoding='utf-8') as f1, open(file2, 'r', encoding='utf-8') as f2, open(file3, 'r', encoding='utf-8') as f3:
-        try:
-            data1 = yaml.safe_load(f1)
-            data2 = yaml.safe_load(f2)
-            data3 = yaml.safe_load(f3)
-        except yaml.YAMLError as e:
-            print(f"YAML文件加载错误: {e}")
-            return None
+    try:
+        with open(file1, 'r', encoding='utf-8') as f1, \
+             open(file2, 'r', encoding='utf-8') as f2, \
+             open(file3, 'r', encoding='utf-8') as f3:
+            data1 = yaml.load(f1)
+            data2 = yaml.load(f2)
+            data3 = yaml.load(f3)
 
-    # 确保键存在
-    for key in ['proxies', 'proxy-groups', 'rules']:
-        if key not in data1:
-            data1[key] = []
-        if key not in data2:
-            data2[key] = []
-        if key not in data3:
-            data3[key] = []
+        # 使用 ruamel.yaml 合并 YAML 文件
+        merged_data = yaml.load("{}")
+        for key in ['proxies', 'proxy-groups', 'rules']:
+            if key in data1:
+                merged_data[key] = data1[key]
+            if key in data2:
+                if key not in merged_data:
+                    merged_data[key] = []
+                merged_data[key].extend(data2[key])
+            if key in data3:
+                if key not in merged_data:
+                    merged_data[key] = []
+                merged_data[key].extend(data3[key])
 
-    # 合并并去重proxies
-    data1['proxies'] = list({v['name']:v for v in data1['proxies'] + data2['proxies'] + data3['proxies']}.values())
+        # 去重 proxies
+        if 'proxies' in merged_data:
+            merged_data['proxies'] = list({v['name']:v for v in merged_data['proxies']}.values())
 
-    # 合并并去重proxy-groups
-    group_dict = {group['name']: group for group in data1['proxy-groups']}
-    for group in data2['proxy-groups'] + data3['proxy-groups']:
-        name = group['name']
-        if name in group_dict:
-            existing_group = group_dict[name]
-            existing_group['proxies'] = list(set(existing_group['proxies'] + group['proxies']))
-        else:
-            group_dict[name] = group
-    data1['proxy-groups'] = list(group_dict.values())
+        # 去重 proxy-groups
+        if 'proxy-groups' in merged_data:
+            group_dict = {group['name']: group for group in merged_data['proxy-groups']}
+            for group_list in [data1, data2, data3]:
+                for group in group_list.get('proxy-groups', []):
+                    name = group['name']
+                    if name in group_dict:
+                        existing_group = group_dict[name]
+                        existing_group['proxies'] = list(set(existing_group['proxies'] + group['proxies']))
+                    else:
+                        group_dict[name] = group
+            merged_data['proxy-groups'] = list(group_dict.values())
 
-    # 合并并去重rules
-    data1['rules'] = list(set(data1['rules'] + data2['rules'] + data3['rules']))
+        # 去重 rules
+        if 'rules' in merged_data:
+            merged_data['rules'] = list(set(merged_data['rules']))
 
-    return yaml.dump(data1, allow_unicode=True, sort_keys=False)
+        return yaml.dump(merged_data)
+
+    except Exception as e:
+        print(f"YAML文件处理错误: {e}")
+        return None
 
 if __name__ == "__main__":
     file1 = './configs/config1.yaml'
