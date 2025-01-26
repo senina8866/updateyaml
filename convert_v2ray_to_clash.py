@@ -50,12 +50,20 @@ def fetch_rules(url):
 # 解析SS协议
 def parse_ss(url):
     base64_data = url[5:].split('#')[0]  # 去掉标签部分
+    # 确保 Base64 长度是 4 的倍数
     padding = 4 - (len(base64_data) % 4)
     if padding and padding < 4:
         base64_data += '=' * padding
 
-    decoded = base64.urlsafe_b64decode(base64_data).decode('utf-8')
+    try:
+        decoded = base64.urlsafe_b64decode(base64_data).decode('utf-8')
+    except Exception as e:
+        raise ValueError(f"Failed to decode SS URL: {url}. Error: {e}")
+    
     parts = decoded.split('@')
+    if len(parts) != 2:
+        raise ValueError(f"Invalid SS URL format: {decoded}")
+    
     method_password, server_port = parts[0], parts[1]
     method, password = method_password.split(':')
     server, port = server_port.split(':')
