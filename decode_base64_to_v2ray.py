@@ -10,4 +10,4 @@ def decode_base64_file(input_file, output_file):
     print(decoded_content)
 
 if __name__ == "__main__":
-    decode_base64_file('./configs/config3.txt', './configs/config3_decoded.txt')
+    decode_base64_file('./configs/config3-base64.txt', './configs/config3.txt')
