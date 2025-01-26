@@ -332,17 +332,125 @@ proxy-groups:
   - 42.236.73.72
   type: select
 rules:
-- domain: google.com
+- domain: 高性价比机场:https://kfyun.uk
   outboundTag: Proxy
   type: field
-- domain: youtube.com
+- domain: 0|--1
   outboundTag: Proxy
   type: field
-- ip: 8.8.8.8
+- domain: 0|--3
   outboundTag: Proxy
   type: field
-- ip: 0.0.0.0/0
-  outboundTag: DIRECT
+- domain: 0|--5
+  outboundTag: Proxy
+  type: field
+- domain: 0|--9
+  outboundTag: Proxy
+  type: field
+- domain: 0|--10
+  outboundTag: Proxy
+  type: field
+- domain: 103.44.255.81
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇭🇰 香港2|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇭🇰 香港3|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇭🇰 香港6|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇹🇼 台湾|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇯🇵 日本|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 154.83.91.150
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇯🇵 日本3|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 132.226.171.151
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇸🇬 新加坡|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇸🇬 新加坡2|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇺🇸 美国|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇰🇷 韩国特殊|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇸🇬 狮城特殊|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇯🇵 日本特殊|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 13|🇩🇪 德国|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 103.44.255.81
+  outboundTag: Proxy
+  type: field
+- domain: 14|香港2|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 14|香港3|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 14|香港6|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 14|台湾|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 14|日本|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 154.83.91.150
+  outboundTag: Proxy
+  type: field
+- domain: 14|日本3|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 132.226.171.151
+  outboundTag: Proxy
+  type: field
+- domain: 14|新加坡|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 14|新加坡2|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 14|美国|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 14|韩国特殊|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 14|狮城特殊|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 14|日本特殊|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 14|德国|@ripaojiedian
+  outboundTag: Proxy
+  type: field
+- domain: 16|d*********g.com_2
+  outboundTag: Proxy
+  type: field
+- domain: 42.236.73.72
+  outboundTag: Proxy
   type: field
 - outboundTag: DIRECT
   type: final
