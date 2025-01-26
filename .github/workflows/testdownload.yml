@@ -29,16 +29,16 @@ jobs:
           then
             sudo apt-get install -y wget
           fi
-
+          
       - name: 下载 Base64 编码的 TXT 文件
         run: |
-          YAML_URL1="https://little-thunder-d99c.linzf5039.workers.dev/335581?clash"
-          YAML_URL2="https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml"
-          CURRENT_DATE=$(date +'%Y%m%d')
-          TXT_URL3="https://clashgithub.com/wp-content/uploads/rss/${CURRENT_DATE}.txt" 
-          curl -o ./configs/config1.yaml $YAML_URL1
-          curl -o ./configs/config2.yaml $YAML_URL2
-          curl -o ./configs/config3.txt $YAML_URL3
+           YAML_URL1="https://little-thunder-d99c.linzf5039.workers.dev/335581?clash"
+           YAML_URL2="https://raw.githubusercontent.com/free18/v2ray/refs/heads/main/c.yaml"
+           CURRENT_DATE=$(date +'%Y%m%d')
+           TXT_URL3="https://clashgithub.com/wp-content/uploads/rss/${CURRENT_DATE}.txt" 
+           curl -o ./configs/config1.yaml $YAML_URL1
+           curl -o ./configs/config2.yaml $YAML_URL2
+           curl -o ./configs/config3.txt $TXT_URL3
 
       - name: 添加文件目录到 Git
         run: |
