@@ -17,6 +17,8 @@ def decode_v2ray_url(v2ray_url):
                 params[key] = value
             else:
                 params[pair] = None
+        # 将alpn转换为列表
+        alpn_list = params.get('alpn', '').split(',') if 'alpn' in params else []
         return {
             'name': match.group('name'),
             'type': 'vless',
@@ -25,7 +27,7 @@ def decode_v2ray_url(v2ray_url):
             'uuid': match.group('uuid'),
             'security': params.get('security', 'none'),
             'sni': params.get('sni', ''),
-            'alpn': params.get('alpn', ''),
+            'alpn': alpn_list,
             'network': params.get('type', 'tcp'),
             'headers': {
                 'type': params.get('headerType', 'none')
@@ -71,7 +73,7 @@ def decode_v2ray_url(v2ray_url):
             'port': int(match.group('port')),
             'password': match.group('password'),
             'sni': params.get('sni', ''),
-            'alpn': params.get('alpn', ''),
+            'alpn': params.get('alpn', '').split(',') if 'alpn' in params else [],
             'network': 'tcp',
             'tls': 'true'
         }
@@ -86,6 +88,7 @@ def save_as_yaml(proxies, output_file, rules, groups):
     }
     with open(output_file, 'w') as f:
         yaml.dump(clash_config, f, allow_unicode=True)
+
 if __name__ == "__main__":
     with open('./configs/config3.txt', 'r') as f:
         v2ray_urls = f.read().splitlines()
@@ -100,7 +103,9 @@ if __name__ == "__main__":
         'RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCN.list,🎯 全球直连',
         'RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/SteamCN.list,🎯 全球直连',
         'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bing/Bing.list,Ⓜ️ Copilot',
-        'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.list,Ⓜ️ Copilot',
+        'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.list,Ⓜ️ Copilot'
+    ]
+    rules.extend([
         'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.list,Ⓜ️ 微软服务',
         'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.list,🍎 苹果服务',
         'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list,📲 Telegram',
@@ -115,7 +120,8 @@ if __name__ == "__main__":
         'RULE-SET,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.list,🎯 全球直连',
         'GEOIP,CN,🎯 全球直连',
         'FINAL,🐟 漏网之鱼'
-    ]
+    ])
+
     groups = [
         {
             'name': '🚀 节点选择',
@@ -134,31 +140,6 @@ if __name__ == "__main__":
         },
         {
             'name': '🌍 国外媒体',
-            'type': 'select',
-            'proxies': ['DIRECT'] + [proxy['name'] for proxy in proxies]
-        },
-        {
-            'name': '💬 OpenAi',
-            'type': 'select',
-            'proxies': ['DIRECT'] + [proxy['name'] for proxy in proxies]
-        },
-        {
-            'name': 'Ⓜ️ Copilot',
-            'type': 'select',
-            'proxies': ['DIRECT'] + [proxy['name'] for proxy in proxies]
-        },
-        {
-            'name': 'Ⓜ️ 微软服务',
-            'type': 'select',
-            'proxies': ['DIRECT'] + [proxy['name'] for proxy in proxies]
-        },
-        {
-            'name': '🍎 苹果服务',
-            'type': 'select',
-            'proxies': ['DIRECT'] + [proxy['name'] for proxy in proxies]
-        },
-        {
-            'name': '📲 Telegram',
             'type': 'select',
             'proxies': ['DIRECT'] + [proxy['name'] for proxy in proxies]
         }
