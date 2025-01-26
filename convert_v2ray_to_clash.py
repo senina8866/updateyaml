@@ -1,9 +1,9 @@
-# 段落1
 import base64
 import yaml
+import requests
 
-# 解析V2Ray TXT的各个部分并转换为Clash YAML格式
-def parse_v2ray_txt(input_file, output_file):
+# 解析V2Ray TXT文件并转换为Clash YAML格式
+def convert_v2ray_to_clash(input_file, output_file, rule_url):
     with open(input_file, 'r') as f:
         lines = f.readlines()
 
@@ -20,7 +20,7 @@ def parse_v2ray_txt(input_file, output_file):
         elif line.startswith('vless://'):
             proxies.append(parse_vless(line))
 
-    config = {
+    clash_config = {
         'proxies': proxies,
         'proxy-groups': [
             {
@@ -30,19 +30,36 @@ def parse_v2ray_txt(input_file, output_file):
                 'url': 'http://www.google.com/generate_204',
                 'interval': 300
             }
-        ]
+        ],
+        'rules': fetch_rules(rule_url)
     }
 
     with open(output_file, 'w') as f:
-        yaml.dump(config, f, allow_unicode=True)
+        yaml.dump(clash_config, f, allow_unicode=True)
+
+# 获取规则集
+def fetch_rules(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.text.splitlines()
+    except Exception as e:
+        print(f"Failed to fetch rules from {url}: {e}")
+        return []
 
 # 解析SS协议
 def parse_ss(url):
-    decoded = base64.urlsafe_b64decode(url[5:]).decode('utf-8')
+    base64_data = url[5:].split('#')[0]  # 去掉标签部分
+    padding = 4 - (len(base64_data) % 4)
+    if padding and padding < 4:
+        base64_data += '=' * padding
+
+    decoded = base64.urlsafe_b64decode(base64_data).decode('utf-8')
     parts = decoded.split('@')
     method_password, server_port = parts[0], parts[1]
     method, password = method_password.split(':')
     server, port = server_port.split(':')
+
     return {
         'name': 'SS-' + server,
         'type': 'ss',
@@ -51,7 +68,7 @@ def parse_ss(url):
         'cipher': method,
         'password': password
     }
-# 段落2
+
 # 解析Trojan协议
 def parse_trojan(url):
     main_part, params = url[9:].split('?', 1)
@@ -79,7 +96,8 @@ def parse_trojan(url):
 
 # 解析VMess协议
 def parse_vmess(url):
-    data = base64.urlsafe_b64decode(url[8:]).decode('utf-8')
+    base64_data = url[8:]
+    data = base64.urlsafe_b64decode(base64_data).decode('utf-8')
     vmess_config = yaml.safe_load(data)
 
     return {
@@ -93,7 +111,7 @@ def parse_vmess(url):
         'network': vmess_config['net'],
         'tls': vmess_config.get('tls', False)
     }
-# 段落3
+
 # 解析VLESS协议
 def parse_vless(url):
     main_part, params = url[8:].split('?', 1)
@@ -122,4 +140,5 @@ def parse_vless(url):
 if __name__ == "__main__":
     input_path = "./configs/config3.txt"
     output_path = "./configs/config3.yaml"
-    parse_v2ray_txt(input_path, output_path)
+    rule_url = "https://raw.githubusercontent.com/Semporia/Clash/refs/heads/master/Calsh%20for%20Windows/config.yaml"
+    convert_v2ray_to_clash(input_path, output_path, rule_url)
