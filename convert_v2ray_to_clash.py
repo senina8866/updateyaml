@@ -1,53 +1,107 @@
-import requests
+import base64
+import yaml
+import re
+from urllib.parse import unquote
 
-# 配置部分
-raw_file_url = "https://raw.githubusercontent.com/senina8866/updateyaml/refs/heads/main/configs/config3.txt"
-output_file_path = "./configs/config3.yaml"
-conversion_url = "https://v1.v2rayse.com/v2ray-clash/"
+# 解析 ss:// 格式
+def parse_ss(url):
+    # 格式: ss://<base64-encoded-password>@<server>:<port>#<name>
+    match = re.match(r"ss://([a-zA-Z0-9+/=]+)@([a-zA-Z0-9.-]+):(\d+)(#.*)?", url)
+    if match:
+        encoded_password = match.group(1)
+        server = match.group(2)
+        port = match.group(3)
+        name = unquote(match.group(4)[1:]) if match.group(4) else server
 
-def download_config(file_url):
-    """从 GitHub 下载配置内容"""
-    response = requests.get(file_url, timeout=10)
-    if response.status_code == 200:
-        print("配置文件内容下载成功！")
-        return response.text  # 返回文件内容
-    else:
-        raise Exception(f"下载失败，状态码: {response.status_code}")
+        password = base64.urlsafe_b64decode(encoded_password + '==').decode('utf-8')
+        return {
+            "name": name,
+            "type": "ss",
+            "server": server,
+            "port": int(port),
+            "cipher": "aes-256-gcm",  # 默认加密方式
+            "password": password
+        }
+    return None
 
-def convert_config_to_yaml(config_content):
-    """将配置内容提交到在线工具并转换"""
-    data = {"text": config_content}  # 提交内容作为文本
-    response = requests.post(conversion_url, data=data, timeout=10)
-    if response.status_code == 200:
-        print("转换成功！")
-        if "port:" in response.text:  # 校验 YAML 格式
-            return response.text
-        else:
-            raise Exception("返回结果可能不是有效的 YAML 格式！")
-    else:
-        raise Exception(f"转换失败，状态码: {response.status_code}")
+# 解析 vmess:// 格式
+def parse_vmess(url):
+    # 格式: vmess://<base64-encoded-json>
+    match = re.match(r"vmess://([a-zA-Z0-9+/=]+)", url)
+    if match:
+        decoded = base64.urlsafe_b64decode(match.group(1) + '==').decode('utf-8')
+        config = yaml.safe_load(decoded)
 
-def save_to_file(content, file_path):
-    """将转换结果保存为 YAML 文件"""
-    with open(file_path, "w", encoding="utf-8") as file:
-        file.write(content)
-    print(f"文件已保存到: {file_path}")
+        return {
+            "name": config["ps"],
+            "type": "vmess",
+            "server": config["add"],
+            "port": config["port"],
+            "uuid": config["id"],
+            "alterId": config["aid"],
+            "cipher": "auto",
+            "tls": config["tls"]
+        }
+    return None
 
-# 主逻辑
-try:
-    # 步骤 1: 下载文件内容
-    print("开始下载配置文件内容...")
-    config_content = download_config(raw_file_url)
+# 解析 trojan:// 格式
+def parse_trojan(url):
+    # 格式: trojan://<password>@<server>:<port>?<options>#<name>
+    match = re.match(r"trojan://([a-zA-Z0-9]+)@([a-zA-Z0-9.-]+):(\d+)\?([^\s]+)(#.*)?", url)
+    if match:
+        password = match.group(1)
+        server = match.group(2)
+        port = match.group(3)
+        options = match.group(4)
+        name = unquote(match.group(5)[1:]) if match.group(5) else server
 
-    # 步骤 2: 将内容提交到转换工具
-    print("开始提交内容并转换...")
-    yaml_content = convert_config_to_yaml(config_content)
+        return {
+            "name": name,
+            "type": "trojan",
+            "server": server,
+            "port": int(port),
+            "password": password,
+            "tls": True
+        }
+    return None
 
-    # 步骤 3: 保存 YAML 文件
-    print("开始保存 YAML 文件...")
-    save_to_file(yaml_content, output_file_path)
+# 读取配置文件并转换
+def convert_v2ray_to_clash(input_file, output_file):
+    proxies = []
 
-    print("任务完成！配置已成功转换并保存为 YAML 格式。")
+    # 读取输入文件
+    with open(input_file, 'r', encoding='utf-8') as f:
+        for line in f.readlines():
+            line = line.strip()
+            if not line:
+                continue
 
-except Exception as e:
-    print(f"发生错误: {e}")
+            if line.startswith('ss://'):
+                proxy = parse_ss(line)
+            elif line.startswith('vmess://'):
+                proxy = parse_vmess(line)
+            elif line.startswith('trojan://'):
+                proxy = parse_trojan(line)
+            else:
+                continue
+
+            if proxy:
+                proxies.append(proxy)
+
+    # 构建Clash配置
+    clash_config = {
+        'proxies': proxies,
+        'proxy-groups': [],
+        'rules': []
+    }
+
+    # 输出Clash配置
+    with open(output_file, 'w', encoding='utf-8') as f:
+        yaml.dump(clash_config, f, default_flow_style=False, allow_unicode=True)
+
+    print(f"Clash配置已保存至 {output_file}")
+
+# 执行转换
+input_file = './configs/config3.txt'  # 输入V2Ray配置文件
+output_file = './configs/config3.yaml'  # 输出Clash配置文件
+convert_v2ray_to_clash(input_file, output_file)
