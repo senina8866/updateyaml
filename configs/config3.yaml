@@ -1,11 +1,287 @@
-
-<center><h1>404 Not Found</h1></center>
-<hr><center>nginx/1.24.0</center>
-
-
-
-
-
-
-
-
+proxies:
+- alpn: h2
+  headers:
+    type: none
+  name: 15|AR_speednode_0001
+  network: tcp
+  port: 8443
+  security: tls
+  server: eze-1.fromblancwithlove.com
+  sni: ''
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|AR_speednode_0002
+  network: tcp
+  port: 8443
+  security: tls
+  server: 103.50.33.138
+  sni: eze-1.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|BE_speednode_0003
+  network: tcp
+  port: 8443
+  security: tls
+  server: 79.127.224.12
+  sni: bru-be-01.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|BR_speednode_0004
+  network: tcp
+  port: 8443
+  security: tls
+  server: 46.151.194.89
+  sni: sao-br.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|BR_speednode_0005
+  network: tcp
+  port: 8443
+  security: tls
+  server: sao-br.fromblancwithlove.com
+  sni: ''
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|CO_speednode_0016
+  network: tcp
+  port: 8443
+  security: tls
+  server: 169.150.228.24
+  sni: bog-co-01.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|CO_speednode_0017
+  network: tcp
+  port: 8443
+  security: tls
+  server: bog-co-01.fromblancwithlove.com
+  sni: ''
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|DE_speednode_0020
+  network: tcp
+  port: 8443
+  security: tls
+  server: 195.181.175.176
+  sni: de1.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: http/1.1
+  headers:
+    type: none
+  name: 15|DE_speednode_0025
+  network: tcp
+  port: 443
+  security: tls
+  server: 156.67.30.77
+  sni: spotify.com
+  type: vless
+  uuid: 1051bfbb-90db-4261-b5e4-8b91f62b436f
+- alpn: h2
+  headers:
+    type: none
+  name: 15|ES_speednode_0026
+  network: tcp
+  port: 8443
+  security: tls
+  server: 212.102.48.216
+  sni: mad-es.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|ES_speednode_0027
+  network: tcp
+  port: 8443
+  security: tls
+  server: mad-es.fromblancwithlove.com
+  sni: ''
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: ''
+  headers:
+    type: none
+  name: 15|FR_speednode_0028
+  network: tcp
+  port: 22671
+  security: none
+  server: 91.134.102.128
+  sni: telewebion.com
+  type: vless
+  uuid: 91989253-37d6-4d28-83fe-8ffd0c3de0f7
+- alpn: h2
+  headers:
+    type: none
+  name: 15|GB_speednode_0030
+  network: tcp
+  port: 8443
+  security: tls
+  server: 95.173.205.70
+  sni: osl-no-01.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|GR_speednode_0031
+  network: tcp
+  port: 8443
+  security: tls
+  server: ath-gr-01.fromblancwithlove.com
+  sni: ''
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|GR_speednode_0032
+  network: tcp
+  port: 8443
+  security: tls
+  server: 79.127.218.204
+  sni: ath-gr-01.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|IN_speednode_0034
+  network: tcp
+  port: 8443
+  security: tls
+  server: 64.227.148.121
+  sni: blr-in.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|KZ_speednode_0037
+  network: tcp
+  port: 8443
+  security: tls
+  server: kz-2.fromblancwithlove.com
+  sni: ''
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|PE_speednode_0038
+  network: tcp
+  port: 8443
+  security: tls
+  server: lim-pe-01.fromblancwithlove.com
+  sni: ''
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|PE_speednode_0039
+  network: tcp
+  port: 8443
+  security: tls
+  server: 79.127.252.81
+  sni: lim-pe-01.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: ''
+  headers:
+    type: none
+  name: 15|RU_speednode_0042
+  network: ws
+  port: 443
+  security: none
+  server: 46.254.92.33
+  sni: mmdserver.us.kg
+  type: vless
+  uuid: 41abecd9-8096-4142-a75c-4e1d36d990bd
+- alpn: h2
+  headers:
+    type: none
+  name: 15|SG_speednode_0044
+  network: tcp
+  port: 8443
+  security: tls
+  server: 156.146.56.207
+  sni: sin-sg-01.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|SG_speednode_0045
+  network: tcp
+  port: 8443
+  security: tls
+  server: sin-sg-01.fromblancwithlove.com
+  sni: ''
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: ''
+  headers:
+    type: none
+  name: 15|US_speednode_0047
+  network: ws
+  port: 443
+  security: none
+  server: 192.0.54.235
+  sni: mmdserver.us.kg
+  type: vless
+  uuid: 41abecd9-8096-4142-a75c-4e1d36d990bd
+- alpn: h2
+  headers:
+    type: none
+  name: 15|ZA_speednode_0049
+  network: tcp
+  port: 8443
+  security: tls
+  server: jnb-sa.fromblancwithlove.com
+  sni: ''
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: h2
+  headers:
+    type: none
+  name: 15|ZA_speednode_0050
+  network: tcp
+  port: 8443
+  security: tls
+  server: 169.150.246.91
+  sni: jnb-sa.fromblancwithlove.com
+  type: vless
+  uuid: 157448af-8ecf-4075-a9e9-b23a6a94899b
+- alpn: http/1.1
+  headers:
+    type: none
+  name: 16|d*********g.com_6
+  network: tcp
+  port: 443
+  security: tls
+  server: 42.236.73.72
+  sni: www.zitian.cn
+  type: vless
+  uuid: 11916472-4e2c-49c6-b75d-71196b3a7ecf
