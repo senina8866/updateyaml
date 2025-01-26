@@ -40,10 +40,6 @@ jobs:
           curl -o ./configs/config2.yaml $YAML_URL2
           curl -o ./configs/config3.txt $TXT_URL3
 
-- name: 解码并转换格式
-  run: |
-    python3 decode_and_convert.py
-
       - name: 安装 Python 3 和依赖
         run: |
           sudo apt-get update
