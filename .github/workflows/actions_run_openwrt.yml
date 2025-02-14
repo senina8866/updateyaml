@@ -30,4 +30,4 @@ jobs:
             -no-reboot -nographic \
             -cpu cortex-a76 -smp 4 \
             -net nic -net user,id=wan,hostfwd=tcp::7080-:80,hostfwd=tcp::7022-:22 &  
-          sleep 18000  # 运行 5 小时
+          sleep 600  # 运行 2 小时
