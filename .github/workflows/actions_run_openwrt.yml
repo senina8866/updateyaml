@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: "*/330 * * * *"  # 每 5.5 小时运行一次
   workflow_dispatch:
 
 jobs:
@@ -30,4 +32,4 @@ jobs:
             -no-reboot -nographic \
             -cpu cortex-a76 -smp 4 \
             -net nic -net user,id=wan,hostfwd=tcp::7080-:80,hostfwd=tcp::7022-:22 &  
-          sleep 7200  # 运行 2 小时
+          sleep 19800  # 运行 5.5 小时
